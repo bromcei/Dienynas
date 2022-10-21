@@ -9,7 +9,7 @@ namespace Dienynas.Repositories
 {
     public class TeachersRepository
     {
-        List<Teacher> TeacherList { get; set; }
+        List<> TeacherList { get; set; }
         string TeacherDBPath;
 
         public TeachersRepository()
@@ -52,8 +52,8 @@ namespace Dienynas.Repositories
         {
             return TeacherList;
         }
-        public Teacher Retrieve(int studentID)
+        public Teacher Retrieve(int teacherID)
         {
-            return TeacherList.Where(s => s.StudentID == studentID).FirstOrDefault();
+            return TeacherList.Where(s => s.StudentID == teacherID).FirstOrDefault();
         }
     }

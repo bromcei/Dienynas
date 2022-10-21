@@ -12,15 +12,51 @@ namespace Dienynas.Classes
         public string StudentName { get; set; }
         public int Grade { get; set; }
         public char GradePrefix { get; set; }
-        DateTime DateAdded { get; set; }
+        public DateTime DateAdded { get; set; }
+        public bool IsActive { get; set; } 
+        public bool IsGraduated { get; set; }
 
-        public Student(int studentID, string studentName, int grade, char gradePrefix, DateTime dateAdded)
+        public Student(int studentID, string studentName, int grade, char gradePrefix, DateTime dateAdded, bool isActive, bool isGraduated)
         {
             StudentID = studentID;
             StudentName = studentName;
-            Grade = grade;
+            if (grade > 0 and grade <= 12){
+                Grade = grade;
+            }
+            else
+            {
+                return false;
+                break;
+            }
             GradePrefix = gradePrefix;
             DateAdded = dateAdded;          
+            IsActive = isActive;
+            IsGraduated = isGraduated;
+        }
+
+
+
+        public bool MoveToNextGrade()
+        {
+            if (Grade < 12 and Grade > 0)
+            {
+                Grade += 1;
+                return true;
+            }
+            else if (Grade == 12)
+            {
+                IsGraduated = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool ChangeStudentClass(char newClassPrefix)
+        {
+            GradePrefix = newClassPrefix;
+            return true;
         }
     }
 }

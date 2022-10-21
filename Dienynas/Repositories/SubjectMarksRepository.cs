@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace Dienynas.Repositories
 {
-    public class StudentsRepository
+    public class SubjectMarksRepository
     {
-        public List<Student> StudentList { get; set; }
+        public List<SubjectMark> SubjectMarksList { get; set; }
         string SubjectMarksDBPath;
 
-        public StudentsRepository()
+        public SubjectMarksRepository()
         {
-            StudentList = new List<Student>();
-            StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\", "Students.txt");
+            SubjectMarksList = new List<SubjecMark>();
+            StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+            int markID;
             int studentID;
-            string studentName;
-            int grade;
-            char gradePrefix;
-            string[] fileLine;
-            char[] possibleGradePrefixes = { 'A', 'B', 'C' };
+            int teacherID;
+            int subjectID;
+            double markValue;
             DateTime dateAdded;
 
             foreach (string line in File.ReadAllLines(StudentsDBPath))
@@ -30,16 +29,15 @@ namespace Dienynas.Repositories
                 fileLine = line.Split(";");
                 gradePrefix = '-';
                 if (
-                    int.TryParse(fileLine[0], out studentID) &&
-                    fileLine[1].Length >0 &&
-                    int.TryParse(fileLine[2], out grade) &&
-                    char.TryParse(fileLine[3], out gradePrefix) &&
-                    possibleGradePrefixes.Contains(gradePrefix) &&
-                    DateTime.TryParse(fileLine[4], out dateAdded)
+                    int.TryParse(fileLine[0], out markID) &&
+                    int.TryParse(fileLine[1], out studentID) &&
+                    int.TryParse(fileLine[2], out teacherID) &&
+                    int.TryParse(fileLine[3], out subjectID) &&
+                    double.TryParse(fileLine[4], out markValue) &&
+                    DateTime.TryParse(fileLine[5], out dateAdded)
                     )
                 {
-                    studentName = fileLine[1];
-                    StudentList.Add(new Student(studentID, studentName, grade, gradePrefix, dateAdded));
+                    SubjectMarksList.Add(new SubjectMark(markID, studentID, teacherID, subjectID, markValue, dateAdded));
                 }
                 //else
                 //{
