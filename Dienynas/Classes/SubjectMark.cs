@@ -28,7 +28,12 @@ namespace Dienynas.Classes
         public bool ChangeMark(int newMark)
         {
             if (newMark > 0 and newMark <= 10){
-
+                MarkValue = newMark;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

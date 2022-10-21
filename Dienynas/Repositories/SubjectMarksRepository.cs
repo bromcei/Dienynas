@@ -46,13 +46,13 @@ namespace Dienynas.Repositories
             }
             
         }
-        public List<Student> Retrieve()
+        public List<SubjecMark> Retrieve()
         {
-            return StudentList;
+            return SubjectMarksList;
         }
-        public Student Retrieve(int studentID)
+        public SubjecMark Retrieve(int markID)
         {
-            return StudentList.Where(s => s.StudentID == studentID).FirstOrDefault();
+            return SubjectMarksList.Where(s => s.MarkID == markID).FirstOrDefault();
         }
     }
 
