@@ -18,27 +18,28 @@ namespace Dienynas.Classes
 
         public Student(int studentID, string studentName, int grade, char gradePrefix, DateTime dateAdded, bool isActive, bool isGraduated)
         {
-            StudentID = studentID;
-            StudentName = studentName;
-            if (grade > 0 and grade <= 12){
+
+            if (grade > 0 && grade <= 12){
+                StudentID = studentID;
+                StudentName = studentName;
                 Grade = grade;
+                GradePrefix = gradePrefix;
+                DateAdded = dateAdded;
+                IsActive = isActive;
+                IsGraduated = isGraduated;
             }
             else
             {
-                return false;
-                break;
+                throw new ArgumentException("Mokinio klase negali buti maziau uz 0 arba daugiau nei 12!");
             }
-            GradePrefix = gradePrefix;
-            DateAdded = dateAdded;          
-            IsActive = isActive;
-            IsGraduated = isGraduated;
+
         }
 
 
 
         public bool MoveToNextGrade()
         {
-            if (Grade < 12 and Grade > 0)
+            if (Grade < 12 && Grade > 0)
             {
                 Grade += 1;
                 return true;

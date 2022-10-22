@@ -9,8 +9,8 @@ namespace Dienynas.Repositories
 {
     public class TeachersRepository
     {
-        List<> TeacherList { get; set; }
-        string TeacherDBPath;
+        public List<Teacher> TeacherList { get; set; }
+        public string TeacherDBPath;
 
         public TeachersRepository()
         {
@@ -18,7 +18,7 @@ namespace Dienynas.Repositories
             TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\", "Teachers.txt");
             int teacherID;
             string teacherName;
-            int subjectID;
+            List<int> subjectIDs;
             int perceptorGrade;
             char gradePrefix;
             string[] fileLine;
@@ -32,14 +32,14 @@ namespace Dienynas.Repositories
                 if (
                     int.TryParse(fileLine[0], out teacherID) &&
                     fileLine[1].Length > 0 &&
-                    int.TryParse(fileLine[2], out subjectID) &&
                     int.TryParse(fileLine[3], out perceptorGrade) &&
                     possibleGradePrefixes.Contains(gradePrefix) &&
                     DateTime.TryParse(fileLine[4], out dateAdded)
                     )
                 {
+                    subjectIDs = fileLine[2].Split(',').Select(subID => Int32.Parse(subID)).ToList();
                     teacherName = fileLine[1];
-                    TeacherList.Add(new Teacher(teacherID, teacherName, subjectID, perceptorGrade, gradePrefix, dateAdded));
+                    TeacherList.Add(new Teacher(teacherID, teacherName, subjectIDs, perceptorGrade, gradePrefix, dateAdded));
                 }
                 //else
                 //{
@@ -54,6 +54,7 @@ namespace Dienynas.Repositories
         }
         public Teacher Retrieve(int teacherID)
         {
-            return TeacherList.Where(s => s.StudentID == teacherID).FirstOrDefault();
+            return TeacherList.Where(s => s.TeacherID == teacherID).FirstOrDefault();
         }
     }
+}

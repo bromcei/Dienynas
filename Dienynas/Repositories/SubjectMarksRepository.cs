@@ -11,12 +11,13 @@ namespace Dienynas.Repositories
     public class SubjectMarksRepository
     {
         public List<SubjectMark> SubjectMarksList { get; set; }
-        string SubjectMarksDBPath;
+        public string SubjectMarksDBPath;
 
         public SubjectMarksRepository()
         {
-            SubjectMarksList = new List<SubjecMark>();
-            StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+            SubjectMarksList = new List<SubjectMark>();
+            SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+            string[] fileLine;
             int markID;
             int studentID;
             int teacherID;
@@ -24,10 +25,10 @@ namespace Dienynas.Repositories
             double markValue;
             DateTime dateAdded;
 
-            foreach (string line in File.ReadAllLines(StudentsDBPath))
+            foreach (string line in File.ReadAllLines(SubjectMarksDBPath))
             {
                 fileLine = line.Split(";");
-                gradePrefix = '-';
+
                 if (
                     int.TryParse(fileLine[0], out markID) &&
                     int.TryParse(fileLine[1], out studentID) &&
@@ -46,11 +47,11 @@ namespace Dienynas.Repositories
             }
             
         }
-        public List<SubjecMark> Retrieve()
+        public List<SubjectMark> Retrieve()
         {
             return SubjectMarksList;
         }
-        public SubjecMark Retrieve(int markID)
+        public SubjectMark Retrieve(int markID)
         {
             return SubjectMarksList.Where(s => s.MarkID == markID).FirstOrDefault();
         }

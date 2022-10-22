@@ -11,7 +11,7 @@ namespace Dienynas.Repositories
     public class StudentsRepository
     {
         public List<Student> StudentList { get; set; }
-        string SubjectMarksDBPath;
+        public string StudentsDBPath;
 
         public StudentsRepository()
         {
@@ -21,6 +21,8 @@ namespace Dienynas.Repositories
             string studentName;
             int grade;
             char gradePrefix;
+            bool isActive;
+            bool isGraduated;
             string[] fileLine;
             char[] possibleGradePrefixes = { 'A', 'B', 'C' };
             DateTime dateAdded;
@@ -35,11 +37,13 @@ namespace Dienynas.Repositories
                     int.TryParse(fileLine[2], out grade) &&
                     char.TryParse(fileLine[3], out gradePrefix) &&
                     possibleGradePrefixes.Contains(gradePrefix) &&
-                    DateTime.TryParse(fileLine[4], out dateAdded)
+                    DateTime.TryParse(fileLine[4], out dateAdded) &&
+                    bool.TryParse(fileLine[4], out isActive) &&
+                    bool.TryParse(fileLine[5], out isGraduated) 
                     )
                 {
                     studentName = fileLine[1];
-                    StudentList.Add(new Student(studentID, studentName, grade, gradePrefix, dateAdded));
+                    StudentList.Add(new Student(studentID, studentName, grade, gradePrefix, dateAdded, isActive, isGraduated));
                 }
                 //else
                 //{

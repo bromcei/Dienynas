@@ -10,22 +10,17 @@ namespace Dienynas.Classes
     {
         public int SubjectID { get; set; }
         public string SubjectName { get; set; }
-        public int MiniNoGrades { get; set; }
-        public string StartFirstSemester { get; set; }
-        public string EndFirstSemester { get; set; }
-        public string StartSecondSemester { get; set; }
-        public string EndSecondSemester { get; set; }
+        public int Grade { get; set; }  
+        public int MinNoGrades { get; set; }
 
 
-        public Subject(int subjectID, string subjectName, string startFirstSemester, string endFirstSemester, string startSecondSemester, string endSecondSemester )
+
+        public Subject(int subjectID, string subjectName, int grade, int minNoGrades)
         {
             SubjectID = subjectID;
             SubjectName = subjectName;
-            StartFirstSemester = startFirstSemester;
-            EndFirstSemester = endFirstSemester;     
-            StartSecondSemester = startSecondSemester;
-            EndSecondSemester = endSecondSemester
-
+            Grade = grade;
+            MinNoGrades = minNoGrades;
         }
     }
 }
