@@ -39,8 +39,7 @@ namespace Dienynas.Repositories
                     DateTime.TryParse(fileLine[3], out semesterEndDate)
                     )
                 {
-
-                    SemesterList.Add(new Semester(semesterID, fileLine[1], semesterStartDate, semesterEndDate));
+                    SemesterList.Add(new Semester(semesterID, fileLine[1], semesterStartDate, semesterEndDate, fileLine[4]));
                 }
             }
 
