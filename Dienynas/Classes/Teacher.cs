@@ -11,17 +11,15 @@ namespace Dienynas.Classes
         public int TeacherID { get; set; }
         public string TeacherName { get; set; }
         public List<int> SubjectIDList { get; set; }
-        public int PerceptorGrade { get; set; }
-        public char PerceptorGradePrefix { get; set; }
+        public char GradePrefix { get; set; }
         DateTime DateAdded { get; set; }
 
-        public Teacher(int techerID, string teacherName, List<int> subjectIDList, int perceptorGrade, char perceptorGradePrefix, DateTime dateAdded)
+        public Teacher(int techerID, string teacherName, List<int> subjectIDList, char gradePrefix, DateTime dateAdded)
         {
             TeacherID = techerID;
             TeacherName = teacherName;
             SubjectIDList = subjectIDList;
-            PerceptorGrade = perceptorGrade;
-            PerceptorGradePrefix = perceptorGradePrefix;    
+            GradePrefix = gradePrefix;    
             DateAdded = dateAdded;
         }
 
