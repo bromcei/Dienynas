@@ -12,13 +12,15 @@ namespace Dienynas.Classes
         public String SemesterName { get; set; }
         public DateTime SemesterStart { get; set; }
         public DateTime SemesterEnd { get; set; }
+        public string SchoolYear { get; set; }
 
-        public Semester(int semesterID, String semesterName, DateTime semesterStart, DateTime semesterEnd)
+        public Semester(int semesterID, String semesterName, DateTime semesterStart, DateTime semesterEnd, string schoolYear)
         {
             SemesterID = semesterID;
             SemesterName = semesterName;
             SemesterStart = semesterStart;
             SemesterEnd = semesterEnd;
+            SchoolYear = schoolYear;
         }
     }
 
