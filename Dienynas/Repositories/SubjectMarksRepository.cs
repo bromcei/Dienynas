@@ -72,6 +72,29 @@ namespace Dienynas.Repositories
         {
             return SubjectMarksList.Max(marks => marks.MarkID);
         }
+        public bool ChangeMark(int markID)
+        {
+            SubjectMark markChanged = Retrieve(markID);
+            if (markChanged.ChangeMark(markID))
+            {
+                String fileString = "";
+                File.Delete(SubjectMarksDBPath);
+                foreach (SubjectMark mark in SubjectMarksList)
+                {
+                    fileString += $"{mark.MarkID};{mark.StudentID};{mark.TeacherID};{mark.SubjectID};{mark.MarkValue};{mark.EventDate}" + System.Environment.NewLine;
+                }
+                File.WriteAllText(fileString, SubjectMarksDBPath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public List<SubjectMark> GetSubjectMarks(int studentID, int subjectID)
+        {
+            return SubjectMarksList.Where(marks => marks.StudentID == studentID && marks.SubjectID == subjectID).ToList();
+        }
     }
 
 }

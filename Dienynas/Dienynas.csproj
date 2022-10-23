@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Data\DataErrors\" />
+    <Folder Include="Reports\" />
   </ItemGroup>
 
 </Project>

@@ -23,17 +23,7 @@ namespace Dienynas.Classes
             TeacherID = teacherID;
             SubjectID = subjectID;
             MarkValue = markValue;
-            EventDate = eventDate;
-            int monthNo = EventDate.Month;
-            if (monthNo >= 9 && monthNo <= 12)
-            {
-                SemesterName = EventDate.ToString("yyyy") + "-" + (EventDate.Year + 1).ToString() + " 1st Semester";
-            }
-            else
-            {
-                SemesterName = (EventDate.Year - 1).ToString() + EventDate.ToString("yyyy") + " 2nd Semester";
-            }
-            
+            EventDate = eventDate;         
              
         }
         public bool ChangeMark(int newMark)
