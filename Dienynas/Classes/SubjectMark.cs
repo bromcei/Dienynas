@@ -14,6 +14,7 @@ namespace Dienynas.Classes
         public int SubjectID { get; set; }
         public double MarkValue { get; set; }
         public DateTime EventDate { get; set; }
+        public string SemesterName { get; set; }
 
         public SubjectMark(int markID, int studentID, int teacherID, int subjectID, double markValue, DateTime eventDate)
         {
@@ -23,6 +24,16 @@ namespace Dienynas.Classes
             SubjectID = subjectID;
             MarkValue = markValue;
             EventDate = eventDate;
+            int monthNo = EventDate.Month;
+            if (monthNo >= 9 && monthNo <= 12)
+            {
+                SemesterName = EventDate.ToString("yyyy") + "-" + (EventDate.Year + 1).ToString() + " 1st Semester";
+            }
+            else
+            {
+                SemesterName = (EventDate.Year - 1).ToString() + EventDate.ToString("yyyy") + " 2nd Semester";
+            }
+            
              
         }
         public bool ChangeMark(int newMark)

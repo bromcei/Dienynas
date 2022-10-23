@@ -12,10 +12,22 @@ namespace Dienynas.Repositories
         public List<Teacher> TeacherList { get; set; }
         public string TeacherDBPath;
 
-        public TeachersRepository()
+        public TeachersRepository(string env)
         {
             TeacherList = new List<Teacher>();
-            TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\", "Teachers.txt");
+            
+            if (env == "prod")
+            {
+                TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Teachers.txt");
+            }
+            else if (env == "test")
+            {
+                TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test\", "Teachers_test.txt");
+            }
+            else
+            {
+                throw new ArgumentException("Bloga pasirinkta env");
+            }
             int teacherID;
             string teacherName;
             List<int> subjectIDs;
@@ -55,6 +67,17 @@ namespace Dienynas.Repositories
         public Teacher Retrieve(int teacherID)
         {
             return TeacherList.Where(s => s.TeacherID == teacherID).FirstOrDefault();
+        }
+        public bool CheckTeacherID(int teacherID)
+        {
+            if (TeacherList.Where(s => s.TeacherID == teacherID).Count() == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

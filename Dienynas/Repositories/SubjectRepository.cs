@@ -12,10 +12,22 @@ namespace Dienynas.Repositories
         public List<Subject> SubjectList { get; set; }
         public string SubjectDBPath;
 
-        public SubjectRepository()
+        public SubjectRepository(string env)
         {
             SubjectList = new List<Subject>();
-            SubjectDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\", "Subjects.txt");
+            
+            if (env == "prod")
+            {
+                SubjectDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Subjects.txt");
+            }
+            else if (env == "test")
+            {
+                SubjectDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Tes\t", "Subjects_test.txt");
+            }
+            else
+            {
+                throw new ArgumentException("Bloga pasirinkta env");
+            }
             string[] fileLine;
             int subjectID;
             string subjectName;
@@ -50,6 +62,17 @@ namespace Dienynas.Repositories
         public Subject Retrieve(int subjectID)
         {
             return SubjectList.Where(s => s.SubjectID == subjectID).FirstOrDefault();
+        }
+        public bool CheckSubjectID(int subjectID)
+        {
+            if (SubjectList.Where(s => s.SubjectID == subjectID).Count() == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -25,5 +25,16 @@ namespace Dienynas.Classes
             DateAdded = dateAdded;
         }
 
+        public bool CanTeacherTeachSubject(int subjectID)
+        {
+            if (SubjectIDList.Contains(subjectID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

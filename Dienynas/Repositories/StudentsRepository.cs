@@ -13,10 +13,22 @@ namespace Dienynas.Repositories
         public List<Student> StudentList { get; set; }
         public string StudentsDBPath;
 
-        public StudentsRepository()
+        public StudentsRepository(string env)
         {
             StudentList = new List<Student>();
-            StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\", "Students.txt");
+            if (env == "prod")
+            {
+                StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Students.txt");
+            }
+            else if (env == "test")
+            {
+                StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test\", "Students_test.txt");
+            }
+            else
+            {
+                throw new ArgumentException("Bloga pasirinkta env");
+            }
+            
             int studentID;
             string studentName;
             int grade;
@@ -59,6 +71,18 @@ namespace Dienynas.Repositories
         public Student Retrieve(int studentID)
         {
             return StudentList.Where(s => s.StudentID == studentID).FirstOrDefault();
+        }
+
+        public bool CheckStudentID(int studentID)
+        {
+            if (StudentList.Where(s => s.StudentID == studentID).Count() == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

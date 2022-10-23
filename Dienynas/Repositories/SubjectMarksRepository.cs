@@ -13,10 +13,23 @@ namespace Dienynas.Repositories
         public List<SubjectMark> SubjectMarksList { get; set; }
         public string SubjectMarksDBPath;
 
-        public SubjectMarksRepository()
+        public SubjectMarksRepository(string env)
         {
             SubjectMarksList = new List<SubjectMark>();
-            SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+            
+            if (env == "prod")
+            {
+                SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+            }
+            else if (env == "test")
+            {
+                SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test", "SubjectMarks_test.txt");
+            }
+            else
+            {
+                throw new ArgumentException("Bloga pasirinkta env");
+            }
+
             string[] fileLine;
             int markID;
             int studentID;
@@ -54,6 +67,10 @@ namespace Dienynas.Repositories
         public SubjectMark Retrieve(int markID)
         {
             return SubjectMarksList.Where(s => s.MarkID == markID).FirstOrDefault();
+        }
+        public int GetMaxMarkID()
+        {
+            return SubjectMarksList.Max(marks => marks.MarkID);
         }
     }
 
