@@ -19,18 +19,18 @@ namespace Dienynas.Repositories
             
             if (env == "prod")
             {
-                SubjectMarksDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod", "SubjectMarks.txt");
+                SubjectMarksDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Prod", "SubjectMarks.txt");
             }
             else if (env == "test")
             {
-                SubjectMarksDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test", "SubjectMarks_test.txt");
+                SubjectMarksDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Test", "SubjectMarks_test.txt");
             }
             else
             {
                 throw new ArgumentException("Bloga pasirinkta env");
             }
 
-            string[] fileLine;
+
             int markID;
             int studentID;
             int teacherID;
@@ -38,7 +38,10 @@ namespace Dienynas.Repositories
             double markValue;
             DateTime dateAdded;
 
-            foreach (string line in File.ReadAllLines(SubjectMarksDBPath))
+            string[] RawFile = File.ReadAllLines(SubjectMarksDBPath);
+            string[] fileLine;
+
+            foreach (string line in RawFile)
             {
                 fileLine = line.Split(";");
 

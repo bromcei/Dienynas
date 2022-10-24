@@ -29,7 +29,16 @@ namespace Dienynas
             StudentsMarking = new StudentsMarkingService(Students, Teachers, Subjects, SubjectMarks);
             SemesterEveluation = new SemesterEveluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
             List<string> TestList = new List<string>{ "AS", "mnr", "ne"};
-            listTest.DataSource = TestList;
+            listTest.DataSource = Students.Retrieve().ToList();
+
+            dataGridView1.Columns.Add("newColumnName", "Student Name");
+            foreach ( DateTime date in Semesters.SemesterDatesList(1))
+            {
+                dataGridView1.Columns.Add("newColumnName", date.ToString("yyyy-MM-dd"));
+            }
+            
+            dataGridView1.Rows.Add("1", "XX");
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -39,11 +48,17 @@ namespace Dienynas
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            var curItem = listTest.SelectedItems;
 
+            MessageBox.Show($"Selected Student {curItem}");
         }
 
         private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

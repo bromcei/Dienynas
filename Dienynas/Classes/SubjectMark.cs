@@ -14,7 +14,7 @@ namespace Dienynas.Classes
         public int SubjectID { get; set; }
         public double MarkValue { get; set; }
         public DateTime EventDate { get; set; }
-        public string SemesterName { get; set; }
+     //   public string SemesterName { get; set; }
 
         public SubjectMark(int markID, int studentID, int teacherID, int subjectID, double markValue, DateTime eventDate)
         {
@@ -23,8 +23,9 @@ namespace Dienynas.Classes
             TeacherID = teacherID;
             SubjectID = subjectID;
             MarkValue = markValue;
-            EventDate = eventDate;         
-             
+            EventDate = eventDate;
+
+
         }
         public bool ChangeMark(int newMark)
         {

@@ -19,11 +19,11 @@ namespace Dienynas.Repositories
             
             if (env == "prod")
             {
-                SubjectDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Subjects.txt");
+                SubjectDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Prod\", "Subjects.txt");
             }
             else if (env == "test")
             {
-                SubjectDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Tes\t", "Subjects_test.txt");
+                SubjectDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Tes\t", "Subjects_test.txt");
             }
             else
             {
@@ -60,6 +60,11 @@ namespace Dienynas.Repositories
         public List<Subject> Retrieve()
         {
             return SubjectList;
+        }
+
+        public List<Subject> RetrieveByGrade(int gradeID)
+        {
+            return SubjectList.Where(sub => sub.Grade == gradeID).ToList();
         }
         public Subject Retrieve(int subjectID)
         {

@@ -1,4 +1,5 @@
 ﻿using Dienynas.Repositories;
+using Dienynas.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,14 @@ namespace Dienynas.Services
             {
                 return false;
             }
+
+        }
+
+        public List<string> GetSubjectMarksLis(int studentID, int semesterID)
+        {
+            Student student = Students.Retrieve(studentID);
+            List<Subject> subjects = Subjects.RetrieveByGrade(student.Grade);
+            List < string < string >> resultList = new List<string< string >();
 
         }
 

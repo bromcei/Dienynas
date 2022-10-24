@@ -16,21 +16,24 @@ namespace Dienynas.Repositories
             SemesterList = new List<Semester>();
             if (env == "prod")
             {
-                SemesterDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Semesters.txt");
+                SemesterDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Prod\", "Semesters.txt");
             }
             else if (env == "test")
             {
-                SemesterDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test\", "Semesters_test.txt");
+                SemesterDBPath = Path.Combine(new ProjectPath().PathString, @"Data\Test\", "Semesters_test.txt");
             }
             else
             {
                 throw new ArgumentException("Bloga pasirinkta env");
             }
-            string[] fileLine;
+            
             int semesterID;
             DateTime semesterStartDate;
             DateTime semesterEndDate;
-            foreach (string line in File.ReadLines(SemesterDBPath))
+            string[] RawFile = File.ReadAllLines(SemesterDBPath);
+            string[] fileLine;
+
+            foreach (string line in RawFile)
             {
                 fileLine = line.Split(";");
                 if (
