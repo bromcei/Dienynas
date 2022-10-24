@@ -18,11 +18,11 @@ namespace Dienynas.Repositories
             
             if (env == "prod")
             {
-                TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Teachers.txt");
+                TeacherDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Teachers.txt");
             }
             else if (env == "test")
             {
-                TeacherDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test\", "Teachers_test.txt");
+                TeacherDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test\", "Teachers_test.txt");
             }
             else
             {

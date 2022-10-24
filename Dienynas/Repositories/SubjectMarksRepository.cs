@@ -19,11 +19,11 @@ namespace Dienynas.Repositories
             
             if (env == "prod")
             {
-                SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod", "SubjectMarks.txt");
+                SubjectMarksDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod", "SubjectMarks.txt");
             }
             else if (env == "test")
             {
-                SubjectMarksDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test", "SubjectMarks_test.txt");
+                SubjectMarksDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test", "SubjectMarks_test.txt");
             }
             else
             {

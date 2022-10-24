@@ -18,11 +18,11 @@ namespace Dienynas.Repositories
             StudentList = new List<Student>();
             if (env == "prod")
             {
-                StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Students.txt");
+                StudentsDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Students.txt");
             }
             else if (env == "test")
             {
-                StudentsDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test\", "Students_test.txt");
+                StudentsDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test\", "Students_test.txt");
             }
             else
             {

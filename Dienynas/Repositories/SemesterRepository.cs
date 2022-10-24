@@ -16,11 +16,11 @@ namespace Dienynas.Repositories
             SemesterList = new List<Semester>();
             if (env == "prod")
             {
-                SemesterDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Semesters.txt");
+                SemesterDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Semesters.txt");
             }
             else if (env == "test")
             {
-                SemesterDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Test\", "Semesters_test.txt");
+                SemesterDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Test\", "Semesters_test.txt");
             }
             else
             {
@@ -55,6 +55,16 @@ namespace Dienynas.Repositories
         public Semester Retrieve(DateTime markDate)
         {
             return SemesterList.Where(sem => sem.SemesterStart <= markDate && sem.SemesterEnd >= markDate).FirstOrDefault();
+        }
+        public List<DateTime> SemesterDatesList(int semesterID)
+        {
+            List<DateTime> datesList = new List<DateTime>();
+            Semester semester = Retrieve(semesterID);
+            for (DateTime dt = semester.SemesterStart; dt <= semester.SemesterEnd; dt = dt.AddDays(1))
+            {
+                datesList.Add(dt);
+            }
+            return datesList;
         }
     }
 }

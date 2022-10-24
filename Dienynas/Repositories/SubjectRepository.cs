@@ -11,6 +11,7 @@ namespace Dienynas.Repositories
     {
         public List<Subject> SubjectList { get; set; }
         public string SubjectDBPath;
+        public string[] RawFile { get; set; }
 
         public SubjectRepository(string env)
         {
@@ -18,11 +19,11 @@ namespace Dienynas.Repositories
             
             if (env == "prod")
             {
-                SubjectDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Prod\", "Subjects.txt");
+                SubjectDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Prod\", "Subjects.txt");
             }
             else if (env == "test")
             {
-                SubjectDBPath = Path.Combine(Environment.CurrentDirectory, @"Data\Tes\t", "Subjects_test.txt");
+                SubjectDBPath = Path.Combine(@"C:\Users\tomas.ceida\Source\Repos\bromcei\Dienynas\Dienynas\", @"Data\Tes\t", "Subjects_test.txt");
             }
             else
             {
@@ -33,8 +34,9 @@ namespace Dienynas.Repositories
             string subjectName;
             int gradeID;
             int minNoGrades;
+            string[] RawFile = File.ReadAllLines(SubjectDBPath);
 
-            foreach (string line in File.ReadAllLines(SubjectDBPath))
+            foreach (string line in RawFile)
             {
                 fileLine = line.Split(";");
 
