@@ -16,14 +16,22 @@ namespace Dienynas.Services
         public SubjectRepository Subjects { get; set; }
         public SubjectMarksRepository SubjectMarks { get; set; }
         public SemesterRepository Semesters { get; set; }
+        public SemesterEveluationService SemesterEvalService { get; set; }
 
-        public InformationPlotter(StudentsRepository students, TeachersRepository teachers, SubjectRepository subjects, SubjectMarksRepository subjectMarks, SemesterRepository semesters)
+        public InformationPlotter(
+            StudentsRepository students, 
+            TeachersRepository teachers, 
+            SubjectRepository subjects, 
+            SubjectMarksRepository subjectMarks, 
+            SemesterRepository semesters,
+            SemesterEveluationService semesterEveluationService)
         {
             Students = students;
             Teachers = teachers;
             Subjects = subjects;
             SubjectMarks = subjectMarks;
             Semesters = semesters;
+            SemesterEvalService = semesterEveluationService;
         }
 
         public ConsoleTable PlotClassStudents(string classVal)
@@ -85,32 +93,102 @@ namespace Dienynas.Services
 
         }
 
-        public ConsoleTable PlotStudentGrades(string studentID, string subjectID)
+        public ConsoleTable PlotStudentGradesSingleSubject(int studentIDInput, string subjectIDInput)
         {
 
-            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "SubjectName", "MarkValue");
-            int studentID;
-            string subjectID;
+            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "TeacherName","SubjectName", "MarkValue");
+            int subjectID;
             List<SubjectMark> markList;
 
-            if (int.TryParse(classVal, out grade))
+            if (
+                int.TryParse(subjectIDInput, out subjectID)
+                )
             {
-                subjectsList = Subjects.RetrieveByGrade(grade);
+                markList = SubjectMarks.GetSubjectMarks(studentIDInput, subjectID);
             }
             else
             {
-                subjectsList = new List<Subject>();
+                markList = new List<SubjectMark>();
             }
-            if (subjectsList.Count > 0)
+            if (markList.Count > 0)
             {
-                foreach (Subject subject in subjectsList)
+                foreach (SubjectMark mark in markList)
                 {
-                    resString.AddRow(subject.SubjectID, subject.SubjectName, subject.Grade, subject.MinNoGrades);
+                    resString.AddRow(
+                        mark.EventDate.ToString("yyyy-MM-dd"), 
+                        Students.Retrieve(mark.StudentID).StudentName, 
+                        Teachers.Retrieve(mark.TeacherID).TeacherName,
+                        Subjects.Retrieve(mark.SubjectID).SubjectName,
+                        mark.MarkValue);
                 }
             }
 
             return resString;
+        }
 
+        public ConsoleTable PlotStudentGrades(int studentIDInput)
+        {
+
+            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "TeacherName", "SubjectName", "MarkValue");
+            List<SubjectMark> markList;
+
+
+            markList = SubjectMarks.GetStudentMarks(studentIDInput);
+            markList.OrderBy(s => s.EventDate);
+            if (markList.Count > 0)
+            {
+                foreach (SubjectMark mark in markList)
+                {
+                    resString.AddRow(
+                        mark.EventDate.ToString("yyyy-MM-dd"),
+                        Students.Retrieve(mark.StudentID).StudentName,
+                        Teachers.Retrieve(mark.TeacherID).TeacherName,
+                        Subjects.Retrieve(mark.SubjectID).SubjectName,
+                        mark.MarkValue);
+                }
+            }
+            return resString;
+        }
+        public ConsoleTable StudentSemesterGrades(int studentID)
+        {
+            ConsoleTable resString = new ConsoleTable(
+                "StudentID", 
+                "StudentName",
+                "SubjectID",
+                "SubjectName", 
+                "1st Semester", 
+                "2nd semester", 
+                "3rd Semester", 
+                "Final Grade");
+            List<SemesterGrade> semesterGrades = SemesterEvalService.GetAllStudentSemesterGrades(studentID);
+            Student student = Students.Retrieve(studentID);
+            List<Subject> subjects = Subjects.RetrieveByGrade(student.Grade);
+
+            List<SemesterGrade> subjectGrades;
+            SemesterGrade firstGrade;
+            SemesterGrade secondGrade;
+            SemesterGrade thirdGrade;
+            double finalGrade;
+
+            foreach (Subject subject in subjects)
+            {
+                subjectGrades = semesterGrades.Where(grades => grades.Subject.SubjectID == subject.SubjectID).ToList();
+                firstGrade = subjectGrades.First(grades => grades.Semester.SemesterNo == 1);
+                secondGrade = subjectGrades.First(grades => grades.Semester.SemesterNo == 2);
+                thirdGrade = subjectGrades.First(grades => grades.Semester.SemesterNo == 3);
+                finalGrade = Math.Round((firstGrade.SemesterGradeValue + secondGrade.SemesterGradeValue + thirdGrade.SemesterGradeValue) / 3.0, 0);
+                resString.AddRow(
+                    student.StudentID,
+                    student.StudentName,
+                    subject.SubjectID,
+                    subject.SubjectName, 
+                    firstGrade.SemesterGradeValue, 
+                    secondGrade.SemesterGradeValue, 
+                    thirdGrade.SemesterGradeValue,
+                    finalGrade);
+            }
+
+            return resString;
         }
     }
 }

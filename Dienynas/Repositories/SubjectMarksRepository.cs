@@ -98,6 +98,10 @@ namespace Dienynas.Repositories
         {
             return SubjectMarksList.Where(marks => marks.StudentID == studentID && marks.SubjectID == subjectID).ToList();
         }
+        public List<SubjectMark> GetStudentMarks(int studentID)
+        {
+            return SubjectMarksList.Where(marks => marks.StudentID == studentID).ToList();
+        }
     }
 
 }

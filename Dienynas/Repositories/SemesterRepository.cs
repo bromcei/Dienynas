@@ -28,21 +28,25 @@ namespace Dienynas.Repositories
             }
             
             int semesterID;
+            int semesterNo;
             DateTime semesterStartDate;
             DateTime semesterEndDate;
             string[] RawFile = File.ReadAllLines(SemesterDBPath);
             string[] fileLine;
+            bool currYear;
 
             foreach (string line in RawFile)
             {
                 fileLine = line.Split(";");
                 if (
                     int.TryParse(fileLine[0], out semesterID) &&
-                    DateTime.TryParse(fileLine[2], out semesterStartDate) &&
-                    DateTime.TryParse(fileLine[3], out semesterEndDate)
+                    int.TryParse(fileLine[1], out semesterNo) &&
+                    DateTime.TryParse(fileLine[3], out semesterStartDate) &&
+                    DateTime.TryParse(fileLine[4], out semesterEndDate) &&
+                    bool.TryParse(fileLine[6], out currYear) 
                     )
                 {
-                    SemesterList.Add(new Semester(semesterID, fileLine[1], semesterStartDate, semesterEndDate, fileLine[4]));
+                    SemesterList.Add(new Semester(semesterID, semesterNo, fileLine[1], semesterStartDate, semesterEndDate, fileLine[4], currYear));
                 }
             }
 
@@ -54,6 +58,10 @@ namespace Dienynas.Repositories
         public Semester Retrieve(int semesterID)
         {
             return SemesterList.Where(sem => sem.SemesterID == semesterID).FirstOrDefault();
+        }
+        public Semester RetrieveCurrentByNo(int semesterNo)
+        {
+            return SemesterList.Where(sem => sem.SemesterNo == semesterNo && sem.CurrentYear == true).FirstOrDefault();
         }
         public Semester Retrieve(DateTime markDate)
         {

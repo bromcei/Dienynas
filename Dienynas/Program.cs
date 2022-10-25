@@ -14,7 +14,7 @@ SemesterRepository Semesters = new SemesterRepository(envName);
 
 StudentsMarkingService StudentsMarking = new StudentsMarkingService(Students, Teachers, Subjects, SubjectMarks);
 SemesterEveluationService SemesterEveluation = new SemesterEveluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
-InformationPlotter Information = new InformationPlotter(Students, Teachers, Subjects, SubjectMarks, Semesters);
+InformationPlotter Information = new InformationPlotter(Students, Teachers, Subjects, SubjectMarks, Semesters, SemesterEveluation);
 
 string userInput = "";
 while (userInput != "quit")
@@ -23,6 +23,7 @@ while (userInput != "quit")
     Console.WriteLine("Press 1 to list Student information");
     Console.WriteLine("Press 2 to list Subject information");
     Console.WriteLine("Press 3 to get student grades");
+    Console.WriteLine("Press 4 to get student final semester Grades");
     Console.WriteLine("Type \"quit\" to quit application");
 
     userInput = Console.ReadLine();
@@ -46,11 +47,43 @@ while (userInput != "quit")
             break;
 
         case "3":
-            Console.WriteLine("Input types:");
-            Console.WriteLine("all - lists all subjects");
-            Console.WriteLine("Grade No - selected grade subjects");
-            string selectedSubType = Console.ReadLine();
-            Console.WriteLine(Information.PlotClassSubjects(selectedSubType));
+            Console.WriteLine("Input student ID:");
+            Console.WriteLine("studentID - selected subject marks");
+            int studentID3;
+            if(!int.TryParse(Console.ReadLine(), out studentID3))
+                {
+                Console.WriteLine("Wrong input type, must by int");
+                break;
+                }
+
+            Console.WriteLine("Input Subject:");
+            Console.WriteLine("all - returns all subject marks");
+            Console.WriteLine("subjectID value - selected subject marks");
+            string SubjectInput = Console.ReadLine();
+            if (SubjectInput == "all")
+            {
+                Console.WriteLine(Information.PlotStudentGrades(studentID3));
+            }
+            else
+            {
+                Console.WriteLine(Information.PlotStudentGradesSingleSubject(studentID3, SubjectInput));
+            }
+            
+            break;
+        case "4":
+            Console.WriteLine("Input student ID:");
+            Console.WriteLine("studentID - selected subject marks");
+            Console.WriteLine("all - shows all students final grades");
+
+            int studentID4;
+            if (!int.TryParse(Console.ReadLine(), out studentID4))
+            {
+                Console.WriteLine("Wrong input type, must by int");
+                break;
+            }
+            Console.WriteLine(Information.StudentSemesterGrades(studentID4));
+
+
             break;
 
         default:
