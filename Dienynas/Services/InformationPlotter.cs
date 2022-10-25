@@ -84,5 +84,33 @@ namespace Dienynas.Services
             return resString;
 
         }
+
+        public ConsoleTable PlotStudentGrades(string studentID, string subjectID)
+        {
+
+            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "SubjectName", "MarkValue");
+            int studentID;
+            string subjectID;
+            List<SubjectMark> markList;
+
+            if (int.TryParse(classVal, out grade))
+            {
+                subjectsList = Subjects.RetrieveByGrade(grade);
+            }
+            else
+            {
+                subjectsList = new List<Subject>();
+            }
+            if (subjectsList.Count > 0)
+            {
+                foreach (Subject subject in subjectsList)
+                {
+                    resString.AddRow(subject.SubjectID, subject.SubjectName, subject.Grade, subject.MinNoGrades);
+                }
+            }
+
+            return resString;
+
+        }
     }
 }

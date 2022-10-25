@@ -20,9 +20,9 @@ string userInput = "";
 while (userInput != "quit")
 {
     Console.WriteLine("Menu:");
-    Console.WriteLine("Press 1 to get Student information");
-    Console.WriteLine("Press 2 to get Subject information");
-    Console.WriteLine("");
+    Console.WriteLine("Press 1 to list Student information");
+    Console.WriteLine("Press 2 to list Subject information");
+    Console.WriteLine("Press 3 to get student grades");
     Console.WriteLine("Type \"quit\" to quit application");
 
     userInput = Console.ReadLine();
@@ -38,6 +38,14 @@ while (userInput != "quit")
             break;
 
         case "2":
+            Console.WriteLine("Input types:");
+            Console.WriteLine("all - lists all subjects");
+            Console.WriteLine("Grade No - selected grade subjects");
+            string selectedSubType = Console.ReadLine();
+            Console.WriteLine(Information.PlotClassSubjects(selectedSubType));
+            break;
+
+        case "3":
             Console.WriteLine("Input types:");
             Console.WriteLine("all - lists all subjects");
             Console.WriteLine("Grade No - selected grade subjects");
