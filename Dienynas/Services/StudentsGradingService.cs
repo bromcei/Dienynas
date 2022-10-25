@@ -52,14 +52,5 @@ namespace Dienynas.Services
             }
 
         }
-
-        public List<string> GetSubjectMarksLis(int studentID, int semesterID)
-        {
-            Student student = Students.Retrieve(studentID);
-            List<Subject> subjects = Subjects.RetrieveByGrade(student.Grade);
-            List < string < string >> resultList = new List<string< string >();
-
-        }
-
     }
 }

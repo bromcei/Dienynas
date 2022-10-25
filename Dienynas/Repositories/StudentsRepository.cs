@@ -57,10 +57,6 @@ namespace Dienynas.Repositories
                 {
 
                     studentName = fileLine[1];
-                    Console.WriteLine(isGraduated);
-                    Console.WriteLine(grade);
-                    Console.WriteLine(studentName);
-                    Console.WriteLine(studentID);
                     StudentList.Add(new Student(studentID, studentName, grade, gradePrefix, dateAdded, isActive, isGraduated));
                 }
                 //else
@@ -77,6 +73,11 @@ namespace Dienynas.Repositories
         public Student Retrieve(int studentID)
         {
             return StudentList.Where(s => s.StudentID == studentID).FirstOrDefault();
+        }
+
+        public List<Student> RetrieveByGrade(int gradeID)
+        {
+            return StudentList.Where(s => s.Grade == gradeID).ToList();
         }
 
         public bool CheckStudentID(int studentID)
