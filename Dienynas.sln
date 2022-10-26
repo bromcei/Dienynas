@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dienynas", "Dienynas\Dienynas.csproj", "{6AA9AC84-C886-4103-87DD-FD8037723960}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dienynas", "Dienynas\Dienynas.csproj", "{6AA9AC84-C886-4103-87DD-FD8037723960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dienynas.Test", "Dienynas.Test\Dienynas.Test.csproj", "{96F691B2-286E-45FF-8051-A157B8FC839C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6AA9AC84-C886-4103-87DD-FD8037723960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AA9AC84-C886-4103-87DD-FD8037723960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AA9AC84-C886-4103-87DD-FD8037723960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96F691B2-286E-45FF-8051-A157B8FC839C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F691B2-286E-45FF-8051-A157B8FC839C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F691B2-286E-45FF-8051-A157B8FC839C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F691B2-286E-45FF-8051-A157B8FC839C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

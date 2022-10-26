@@ -9,14 +9,14 @@ using System.Xml.Linq;
 
 namespace Dienynas.Services
 {
-    public class SemesterEveluationService
+    public class SemesterEvaluationService
     {
         public StudentsRepository Students { get; set; }
         public TeachersRepository Teachers { get; set; }
         public SubjectRepository Subjects { get; set; }
         public SubjectMarksRepository SubjectMarks { get; set; }
         public SemesterRepository Semesters {get; set;}
-        public SemesterEveluationService (StudentsRepository students, TeachersRepository teachers, SubjectRepository subjects, SubjectMarksRepository marks, SemesterRepository semesters)
+        public SemesterEvaluationService (StudentsRepository students, TeachersRepository teachers, SubjectRepository subjects, SubjectMarksRepository marks, SemesterRepository semesters)
         {
             Students = students;
             Teachers = teachers;
@@ -60,6 +60,16 @@ namespace Dienynas.Services
 
             return semesterGradesList;
 
+        }
+
+        public List<List<SemesterGrade>> AllStudentsSemesterGrades()
+        {
+            List <List<SemesterGrade>> allSemesterGradesList = new List<List<SemesterGrade>>();
+            foreach(Student student in Students.StudentList)
+            {
+                allSemesterGradesList.Add(GetAllStudentSemesterGrades(student.StudentID));
+            }
+            return allSemesterGradesList;
         }
     }
 

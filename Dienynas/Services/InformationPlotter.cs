@@ -16,15 +16,15 @@ namespace Dienynas.Services
         public SubjectRepository Subjects { get; set; }
         public SubjectMarksRepository SubjectMarks { get; set; }
         public SemesterRepository Semesters { get; set; }
-        public SemesterEveluationService SemesterEvalService { get; set; }
+        public SemesterEvaluationService SemesterEvalService { get; set; }
 
         public InformationPlotter(
-            StudentsRepository students, 
-            TeachersRepository teachers, 
-            SubjectRepository subjects, 
-            SubjectMarksRepository subjectMarks, 
+            StudentsRepository students,
+            TeachersRepository teachers,
+            SubjectRepository subjects,
+            SubjectMarksRepository subjectMarks,
             SemesterRepository semesters,
-            SemesterEveluationService semesterEveluationService)
+            SemesterEvaluationService semesterEveluationService)
         {
             Students = students;
             Teachers = teachers;
@@ -36,7 +36,7 @@ namespace Dienynas.Services
 
         public ConsoleTable PlotClassStudents(string classVal)
         {
-            
+
             ConsoleTable resString = new ConsoleTable("StudentID", "StudentName", "Grade", "GradePrefix");
             int grade;
             List<Student> studentsList;
@@ -44,7 +44,7 @@ namespace Dienynas.Services
             {
                 studentsList = Students.Retrieve();
             }
-            else if(int.TryParse(classVal, out grade))
+            else if (int.TryParse(classVal, out grade))
             {
                 studentsList = Students.RetrieveByGrade(grade);
             }
@@ -96,7 +96,7 @@ namespace Dienynas.Services
         public ConsoleTable PlotStudentGradesSingleSubject(int studentIDInput, string subjectIDInput)
         {
 
-            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "TeacherName","SubjectName", "MarkValue");
+            ConsoleTable resString = new ConsoleTable("Date", "StudentName", "TeacherName", "SubjectName", "MarkValue");
             int subjectID;
             List<SubjectMark> markList;
 
@@ -115,8 +115,8 @@ namespace Dienynas.Services
                 foreach (SubjectMark mark in markList)
                 {
                     resString.AddRow(
-                        mark.EventDate.ToString("yyyy-MM-dd"), 
-                        Students.Retrieve(mark.StudentID).StudentName, 
+                        mark.EventDate.ToString("yyyy-MM-dd"),
+                        Students.Retrieve(mark.StudentID).StudentName,
                         Teachers.Retrieve(mark.TeacherID).TeacherName,
                         Subjects.Retrieve(mark.SubjectID).SubjectName,
                         mark.MarkValue);
@@ -152,13 +152,13 @@ namespace Dienynas.Services
         public ConsoleTable StudentSemesterGrades(int studentID)
         {
             ConsoleTable resString = new ConsoleTable(
-                "StudentID", 
+                "StudentID",
+                "Grade",
                 "StudentName",
-                "SubjectID",
-                "SubjectName", 
-                "1st Semester", 
-                "2nd semester", 
-                "3rd Semester", 
+                "SubjectName",
+                "1st Semester",
+                "2nd semester",
+                "3rd Semester",
                 "Final Grade");
             List<SemesterGrade> semesterGrades = SemesterEvalService.GetAllStudentSemesterGrades(studentID);
             Student student = Students.Retrieve(studentID);
@@ -179,11 +179,11 @@ namespace Dienynas.Services
                 finalGrade = Math.Round((firstGrade.SemesterGradeValue + secondGrade.SemesterGradeValue + thirdGrade.SemesterGradeValue) / 3.0, 0);
                 resString.AddRow(
                     student.StudentID,
+                    student.Grade,
                     student.StudentName,
-                    subject.SubjectID,
-                    subject.SubjectName, 
-                    firstGrade.SemesterGradeValue, 
-                    secondGrade.SemesterGradeValue, 
+                    subject.SubjectName,
+                    firstGrade.SemesterGradeValue,
+                    secondGrade.SemesterGradeValue,
                     thirdGrade.SemesterGradeValue,
                     finalGrade);
             }
@@ -191,4 +191,5 @@ namespace Dienynas.Services
             return resString;
         }
     }
+
 }

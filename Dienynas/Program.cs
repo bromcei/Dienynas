@@ -13,7 +13,7 @@ SubjectMarksRepository SubjectMarks  = new SubjectMarksRepository(envName);
 SemesterRepository Semesters = new SemesterRepository(envName);
 
 StudentsMarkingService StudentsMarking = new StudentsMarkingService(Students, Teachers, Subjects, SubjectMarks);
-SemesterEveluationService SemesterEveluation = new SemesterEveluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
+SemesterEvaluationService SemesterEveluation = new SemesterEvaluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
 InformationPlotter Information = new InformationPlotter(Students, Teachers, Subjects, SubjectMarks, Semesters, SemesterEveluation);
 
 string userInput = "";
@@ -48,18 +48,19 @@ while (userInput != "quit")
 
         case "3":
             Console.WriteLine("Input student ID:");
-            Console.WriteLine("studentID - selected subject marks");
+            Console.WriteLine("studentID - selected student marks");
             int studentID3;
             if(!int.TryParse(Console.ReadLine(), out studentID3))
                 {
                 Console.WriteLine("Wrong input type, must by int");
                 break;
-                }
+            }
 
             Console.WriteLine("Input Subject:");
             Console.WriteLine("all - returns all subject marks");
             Console.WriteLine("subjectID value - selected subject marks");
             string SubjectInput = Console.ReadLine();
+
             if (SubjectInput == "all")
             {
                 Console.WriteLine(Information.PlotStudentGrades(studentID3));
@@ -70,21 +71,35 @@ while (userInput != "quit")
             }
             
             break;
+
         case "4":
             Console.WriteLine("Input student ID:");
             Console.WriteLine("studentID - selected subject marks");
             Console.WriteLine("all - shows all students final grades");
 
             int studentID4;
-            if (!int.TryParse(Console.ReadLine(), out studentID4))
+            string userInput4 = Console.ReadLine();
+            if (int.TryParse(userInput4, out studentID4))
             {
-                Console.WriteLine("Wrong input type, must by int");
-                break;
+                Console.WriteLine($"{Students.Retrieve(studentID4)} final grades:");
+                Console.WriteLine(Information.StudentSemesterGrades(studentID4));
             }
-            Console.WriteLine(Information.StudentSemesterGrades(studentID4));
-
+            else if (userInput4 == "all")
+            {
+                foreach(Student student in Students.Retrieve().OrderBy(s => s.Grade).OrderBy(s => s.StudentName).ToList())
+                {
+                    Console.WriteLine($"{student.StudentName} final grades:");
+                    Console.WriteLine(Information.StudentSemesterGrades(student.StudentID));
+                    
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unknow input value command");
+            }
 
             break;
+            
 
         default:
             // code block

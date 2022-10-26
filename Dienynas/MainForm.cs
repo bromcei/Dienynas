@@ -15,7 +15,7 @@ namespace Dienynas
         public SemesterRepository Semesters { get; set; }
 
         public StudentsMarkingService StudentsMarking { get; set; }
-        public SemesterEveluationService SemesterEveluation { get; set; }   
+        public SemesterEvaluationService SemesterEveluation { get; set; }   
         public List<string> TestList { get; set; } 
         public MainForm()
         {
@@ -27,7 +27,7 @@ namespace Dienynas
             SubjectMarks = new SubjectMarksRepository(env);
             Semesters = new SemesterRepository(env);
             StudentsMarking = new StudentsMarkingService(Students, Teachers, Subjects, SubjectMarks);
-            SemesterEveluation = new SemesterEveluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
+            SemesterEveluation = new SemesterEvaluationService(Students, Teachers, Subjects, SubjectMarks, Semesters);
             List<string> TestList = new List<string>{ "AS", "mnr", "ne"};
             listTest.DataSource = Students.Retrieve().ToList();
 
